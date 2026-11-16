@@ -18,32 +18,7 @@ jobs:
 
       - name: Fetch and format lottery data
         run: |
-          python3 -c '
-          import urllib.request, json
-
-          req = urllib.request.Request("https://lotto.api.rayriffy.com/latest", headers={"User-Agent": "Mozilla/5.0"})
-          with urllib.request.urlopen(req) as res:
-              raw = json.loads(res.read().decode("utf-8"))["response"]
-
-          formatted = {
-              "draw_date": raw["date"],
-              "source": "สำนักงานสลากกินแบ่งรัฐบาล",
-              "prizes": {
-                  "first": raw["prizes"][0]["number"],
-                  "near_first": raw["prizes"][1]["number"],
-                  "prize_2": raw["prizes"][2]["number"],
-                  "prize_3": raw["prizes"][3]["number"],
-                  "prize_4": raw["prizes"][4]["number"],
-                  "prize_5": raw["prizes"][5]["number"],
-                  "front3": raw["runningNumbers"][0]["number"],
-                  "last3": raw["runningNumbers"][1]["number"],
-                  "last2": raw["runningNumbers"][2]["number"]
-              }
-          }
-
-          with open("data/results.json", "w", encoding="utf-8") as f:
-              json.dump(formatted, f, ensure_ascii=False, indent=2)
-          '
+          python3 -c 'import urllib.request, json; req = urllib.request.Request("https://lotto.api.rayriffy.com/latest", headers={"User-Agent": "Mozilla/5.0"}); raw = json.loads(urllib.request.urlopen(req).read().decode("utf-8"))["response"]; formatted = {"draw_date": raw["date"], "source": "สำนักงานสลากกินแบ่งรัฐบาล", "prizes": {"first": raw["prizes"][0]["number"], "near_first": raw["prizes"][1]["number"], "prize_2": raw["prizes"][2]["number"], "prize_3": raw["prizes"][3]["number"], "prize_4": raw["prizes"][4]["number"], "prize_5": raw["prizes"][5]["number"], "front3": raw["runningNumbers"][0]["number"], "last3": raw["runningNumbers"][1]["number"], "last2": raw["runningNumbers"][2]["number"]}}; open("data/results.json", "w", encoding="utf-8").write(json.dumps(formatted, ensure_ascii=False, indent=2))'
 
       - name: Commit and push updated results.json
         run: |
@@ -51,3 +26,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/results.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update lottery results" && git push)
+กดปุ่มสีเขียว Commit changes... แล้วกลับไปที่แท็บ Actions > กด Run workflow อีกรอบ รอบนี้
