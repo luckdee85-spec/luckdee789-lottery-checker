@@ -1,2 +1,2 @@
-# luckdee789-lottery-checker
-ระบบตรวจผลสลากกินแบ่ง LUCKDEE789
+# luckdee789 เช็คผลหวย
+ระบบตรวจผลสลากกินแบ่ง LUCK DEE
